@@ -1,0 +1,24 @@
+{
+  "name": "forkify",
+  "version": "1.0.0",
+  "description": "Recipe application",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anggriawanmr/forkify-app.git"
+  },
+  "author": "Anggriawan Ridatama",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anggriawanmr/forkify-app/issues"
+  },
+  "homepage": "https://github.com/anggriawanmr/forkify-app#readme",
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.0.0",
+    "parcel": "^2.0.0",
+    "sass": "^1.43.2"
+  }
+}
