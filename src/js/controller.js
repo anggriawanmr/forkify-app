@@ -31,28 +31,33 @@ const renderSpinner = function (parentEl) {
 
 const showRecipe = async function () {
   try {
+    const id = window.location.hash.slice(1);
+
+    if(!id) return;
+    
     // 1) Loading Recipe
     renderSpinner(recipeContainer);
 
     const res = await fetch(
-      'https://forkify-api.herokuapp.com/api/get?rId=47746'
+      `https://forkify-api.herokuapp.com/api/search?q=pizza`
     );
     const data = await res.json();
 
     if (!res.ok) throw new Error(`${data.message} (${res.status})`);
-
-    let { recipe } = data.data;
+    console.log(data.data.recipe);
+    let recipe = data.data.recipe;
     recipe = {
       id: recipe.id,
       title: recipe.title,
       publisher: recipe.publisher,
-      sourceUrl: recipe.source_url,
+      // sourceUrl: recipe.source_url,
       image: recipe.image_url,
       servings: recipe.servings,
       cookingTime: recipe.cooking_time,
       ingredients: recipe.ingredients,
     };
     console.log(recipe);
+
     // 2) Rendering Recipe
     const markup = `
         <figure class="recipe__fig">
@@ -112,8 +117,9 @@ const showRecipe = async function () {
         <div class="recipe__ingredients">
           <h2 class="heading--2">Recipe ingredients</h2>
           <ul class="recipe__ingredient-list">
-            ${recipe.ingredients.map(ing => {
-              return `
+            ${recipe.ingredients
+              .map(ing => {
+                return `
                 <li class="recipe__ingredient">
                   <svg class="recipe__icon">
                     <use href="${icons}#icon-check"></use>
@@ -125,7 +131,8 @@ const showRecipe = async function () {
                   </div>
                 </li>
               `;
-            })}
+              })
+              .join('')}
             
         </div>
 
@@ -158,4 +165,7 @@ const showRecipe = async function () {
   }
 };
 
-showRecipe();
+['hashchange', 'load'].forEach(ev => window.addEventListener(ev, showRecipe));
+
+// window.addEventListener('hashchange', showRecipe);
+// window.addEventListener('load', showRecipe);
